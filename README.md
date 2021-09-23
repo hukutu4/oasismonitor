@@ -1,5 +1,5 @@
 # Oasis simple monitor
-This solution is designed to monitor metrics of Cipher ParaTime nodes and validator nodes in the Oasis Network. It uses one file [metrics-collector.sh](https://github.com/hukutu4/oasismonitor/blob/main/metrics-collector.sh) to collect metrics from the node via Telegraf and send it every 30 seconds to validators.top, where installed Grafana and InfluxDB.
+This solution is designed to monitor metrics of Cipher ParaTime nodes and Mainnet Validator nodes in the Oasis Network. It uses one file [metrics-collector.sh](https://github.com/hukutu4/oasismonitor/blob/main/metrics-collector.sh) to collect metrics from the node via Telegraf and send it every 30 seconds to [validators.top](https://validators.top), where installed Grafana and InfluxDB, and where you can see the metrics of your node by the public key named Entity ID.
 
 Validator node
 ![image](https://user-images.githubusercontent.com/15308726/134585275-53878448-1b2b-43d5-aeba-92db3de7862f.png)
