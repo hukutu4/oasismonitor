@@ -63,6 +63,12 @@ cd ~
 git clone https://github.com/hukutu4/oasismonitor
 chmod +x oasismonitor/metrics-collector.sh
 
+## edit settings header at oasismonitor/metrics-collector.sh, default values below:
+nano oasismonitor/metrics-collector.sh
+# configDir="/node/etc"  # the directory for the config files, eg.: /node/etc
+# sockAddr="unix:/node/data/internal.sock"
+# binDir="/node/bin"
+
 # Start telegraf and check logs for errors
 systemctl start telegraf && journalctl -f -u telegraf
 ```
