@@ -32,17 +32,17 @@ softwareVersion=$(jq -r .software_version <<< $oasisControlStatus)
 isValidator=$(jq -r '.consensus.is_validator' <<< $oasisControlStatus)
 if [[ $isValidator == true ]]; then isValidatorInt=1; else isValidatorInt=0; fi
 peersCount=$(jq -r '.consensus.node_peers | length' <<< $oasisControlStatus)
-committeePeersCount=$(jq -r '.runtimes."AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=".committee.peers | length' <<< $oasisControlStatus)
+committeePeersCount=$(jq -r '.runtimes."0000000000000000000000000000000000000000000000000000000000000000".committee.peers | length' <<< $oasisControlStatus)
 latestHeight=$(jq -r '.consensus.latest_height' <<< $oasisControlStatus)
 latestEpoch=$(jq -r '.consensus.latest_epoch' <<< $oasisControlStatus)
 
-runtimesLatestRound=$(jq -r '.runtimes."AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=".latest_round' <<< $oasisControlStatus)
+runtimesLatestRound=$(jq -r '.runtimes."0000000000000000000000000000000000000000000000000000000000000000".latest_round' <<< $oasisControlStatus)
 if [[ $runtimesLatestRound == null ]]; then runtimesLatestRound=0; fi
-runtimesCommitteeLatestHeight=$(jq -r '.runtimes."AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=".committee.latest_height' <<< $oasisControlStatus)
+runtimesCommitteeLatestHeight=$(jq -r '.runtimes."0000000000000000000000000000000000000000000000000000000000000000".committee.latest_height' <<< $oasisControlStatus)
 if [[ $runtimesCommitteeLatestHeight == null ]]; then runtimesCommitteeLatestHeight=0; fi
-runtimesExecutorRolesCount=$(jq -r '.runtimes."AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=".committee.executor_roles | length' <<< $oasisControlStatus)
-runtimesStorageRolesCount=$(jq -r '.runtimes."AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=".committee.storage_roles | length' <<< $oasisControlStatus)
-runtimesStorageLastFinalizedRound=$(jq -r '.runtimes."AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=".storage.last_finalized_round' <<< $oasisControlStatus)
+runtimesExecutorRolesCount=$(jq -r '.runtimes."0000000000000000000000000000000000000000000000000000000000000000".committee.executor_roles | length' <<< $oasisControlStatus)
+runtimesStorageRolesCount=$(jq -r '.runtimes."0000000000000000000000000000000000000000000000000000000000000000".committee.storage_roles | length' <<< $oasisControlStatus)
+runtimesStorageLastFinalizedRound=$(jq -r '.runtimes."0000000000000000000000000000000000000000000000000000000000000000".storage.last_finalized_round' <<< $oasisControlStatus)
 if [[ $runtimesStorageLastFinalizedRound == null ]]; then runtimesStorageLastFinalizedRound=0; fi
 
 registrationLastRegistration=$(jq -r .registration.last_registration <<< $oasisControlStatus | cut -b -19)
