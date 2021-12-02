@@ -10,7 +10,7 @@ configDir="/node/etc"  # the directory for the config files, eg.: /node/etc
 sockAddr="unix:/node/data/internal.sock"
 binDir="/node/bin"
 ##### optional:
-initialSelfStake=1000
+initialSelfStake=600
 entityPubkeyRaw=""
 identityNodeRaw=""
 format="ROSE"
@@ -56,7 +56,7 @@ fi
 stakeAccountAddress=$($cli stake pubkey2address --public_key $entityPubkeyRaw)
 stakeAccountInfo=$($cli stake account info -a $sockAddr --stake.account.address $stakeAccountAddress)
 activeStake=$(grep -A1 'Active Delegations to' <<< $stakeAccountInfo | awk '/Total/ {print $2}')
-selfStake=$(grep -A1000 'Active Delegations to' <<< $stakeAccountInfo | grep -A1 self | awk '/Amount:/ {print $2}')
+selfStake=$(grep -A1000 'Active Delegations to' <<< $stakeAccountInfo | grep -A1 self | awk '/Amount:/ {print $2}' | head -n1)
 commissionRate=$(grep -P '^\s+rate' <<< $stakeAccountInfo | tail -n1 | awk '{print $2}' | sed -r 's/%//g')
 if [[ -z $commissionRate ]]; then commissionRate=0; fi
 currentReward=$(bc <<< "scale=2 ; ($selfStake - $initialSelfStake) * $rosePrice")
