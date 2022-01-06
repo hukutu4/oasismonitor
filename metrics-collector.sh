@@ -47,6 +47,7 @@ if [[ $runtimesStorageLastFinalizedRound == null ]]; then runtimesStorageLastFin
 
 registrationLastRegistration=$(jq -r .registration.last_registration <<< $oasisControlStatus | cut -b -19)
 registrationExpiration=$(jq -r .registration.descriptor.expiration <<< $oasisControlStatus)
+if [[ $registrationExpiration == null ]]; then registrationExpiration=0; fi
 
 logentry="softwareVersion=\"$softwareVersion\""
 if [[ -n $rosePrice ]]; then
@@ -56,7 +57,9 @@ fi
 stakeAccountAddress=$($cli stake pubkey2address --public_key $entityPubkeyRaw)
 stakeAccountInfo=$($cli stake account info -a $sockAddr --stake.account.address $stakeAccountAddress)
 activeStake=$(grep -A1 'Active Delegations to' <<< $stakeAccountInfo | awk '/Total/ {print $2}')
+if [[ -z $activeStake ]]; then activeStake=0; fi
 selfStake=$(grep -A1000 'Active Delegations to' <<< $stakeAccountInfo | grep -A1 self | awk '/Amount:/ {print $2}' | head -n1)
+if [[ -z $selfStake ]]; then selfStake=0; fi
 commissionRate=$(grep -P '^\s+rate' <<< $stakeAccountInfo | tail -n1 | awk '{print $2}' | sed -r 's/%//g')
 if [[ -z $commissionRate ]]; then commissionRate=0; fi
 currentReward=$(bc <<< "scale=2 ; ($selfStake - $initialSelfStake) * $rosePrice")
